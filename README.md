@@ -25,7 +25,7 @@ Sending Emails
 ------------
 Businesses have the option of sending a daily promotional email (made possible via the Google Email client), to everyone in the database. A status of either "S" (Sent) or "U" (Unsent) will be reflected in the "Email Status" column on the main database page. Business can have the option to further customize this by being able to pre-add email templates and choosing them from a drop down list when sending the daily email. 
 
-- Sending individual emails to customers on demand is also possible, and if choosing the "mass send" option to send the email in the case a new customer is entered after the daily email has been sent, previous customers will not recieve another email in order to prevent spamming. This is done via a Python loop to check if the daily email has already been sent. Though, this can be oviredden by just sending an email to that individual customer you wish to send a second email to. 
+- Sending individual emails to customers on demand is also possible, and if choosing the "mass send" option to send the email in the case a new customer is entered after the daily email has been sent, previous customers will not recieve another email in order to prevent spamming. This is done via a Python loop to check if the daily email has already been sent. Though, this can be overidden by just sending an email to that individual customer you wish to send a second email to. 
 
 -------------
 
