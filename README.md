@@ -4,7 +4,7 @@
 
 Overview of Website 
 -------------------------
-This website serves as an online database (hosted via SQLLite) for fictional businesses in the area to store contact information (name, email, phone number, etc.) of fictional customers. The information in the database is entirely fake. Businesses have the option of sending a daily promotional email (made possible via the Google Email client), to everyone in the database. Business can have the option to further customize this by being able to pre-add email templates and choosing them from a drop down list when sending the daily email. 
+This website serves as an online database (hosted via SQLLite) for fictional businesses in the area to store contact information (name, email, phone number, etc.) for fictional customers. The information in the database is entirely fake. Businesses have the option of sending a daily promotional email (made possible via the Google Email client), to everyone in the database. Business can have the option to further customize this by being able to pre-add email templates and choosing them from a drop down list when sending the daily email. 
 
 Brief Tutorial of Website Functions
 -------------------------
