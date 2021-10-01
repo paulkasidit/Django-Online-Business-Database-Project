@@ -19,6 +19,8 @@ Managing The Database
 ---------------
 Businesses also have options to amend the database such as deleting, adding, or editing customers and their information. Click on the appropriate fields in "Manage Customers & Email > Manage Customers" to execute the required action.  
 
+- Selecting which customer to manage can be done via the provided search field on each page. 
+
 Sending Emails 
 ------------
 Businesses have the option of sending a daily promotional email (made possible via the Google Email client), to everyone in the database. A status of either "S" (Sent) or "U" (Unsent) will be reflected in the "Email Status" column on the main database page. Business can have the option to further customize this by being able to pre-add email templates and choosing them from a drop down list when sending the daily email. 
