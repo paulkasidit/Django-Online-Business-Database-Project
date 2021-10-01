@@ -1,0 +1,37 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<form class = "d-flex" method = "POST" action = "{% url 'online_database:manage_current_customers' %}">
+    {% csrf_token %}
+    <input class  = "form-control me-2" 
+    type = "search" placeholder="Search Customers"
+    aria-label="Search" name = "searched">
+    <button class = "btn btn-outline-secondary"
+    type = "submit">Search</button>
+</form>
+
+{% if searched %}
+
+    <h1>You searched for "{{ searched }}"</h1>  
+    </br>  
+    {% for customer in customers %}
+        {{ customer }}</br>
+    {% endfor %}       
+
+{% else %}
+    <h1> Search For Customers To Manage </h1>
+{% endif %}   
+
+<h2>Update Current Customer</h2>
+<form method="post" action="">
+    {% csrf_token %}<!-- required since Django 1.2 or later -->
+    <ul>
+        {{ formset.as_ul }}
+    </ul>
+    <input type="submit" value="Update Customer"/>
+</form>
+
+{% endblock %}
+
+{% block scripts%}
+{% endblock scripts%}

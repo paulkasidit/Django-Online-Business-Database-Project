@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Customer Database</h1>
+  <p>Welcome To Your Database</p>
+  <h2>Database</h2>
+  <p>An Overview Of Your Database</p>
+  <ul>
+    <li><strong>Your Customers:</strong> {{ num_customers }}</li>
+    <li><strong>Emails To Be Sent Today:</strong> {{ emails_to_be_sent }}</li>
+  </ul>
+{% endblock %}
