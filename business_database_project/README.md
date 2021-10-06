@@ -26,7 +26,7 @@ View - Customer Database
 (27.09.21)
 View - Customer Database/Send Emails
 ----------------------------------------------
-- Search bar to pull up and send email to a specific customer. 
+- Search bar to pull up and send an email to a specific customer. 
 - Javascript ALERT warning if the email has already been sent. (Uses check if sent function).
 
 (29.09.21)

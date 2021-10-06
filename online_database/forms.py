@@ -21,7 +21,7 @@ class CreateClientForm(ModelForm):
                   'email_address',
                   'phone_number',
                     )
-                  
+                
 class CreateCustomerForm(ModelForm):
     class Meta: 
         model = Customer 
@@ -32,12 +32,15 @@ class ManageCurrentCustomerForm(ModelForm):
         model = Customer 
         fields = '__all__'
 
-class CreateEmailTemplateForm(ModelForm):
+
+#Manage Customers & Email Templates/ Create A New Email Template
+class CreateEmailTemplateForm(ModelForm): #Form to create new email tempalate 
     message = forms.CharField( widget=forms.Textarea )
     class Meta: 
         model = EmailTemplate 
         fields = '__all__'
 
+#Send Emails/ Select Email Template 
 class SelectEmailTemplateForm(forms.Form):
     templates = forms.ModelChoiceField(queryset=EmailTemplate.objects.all().order_by('subject'))
 

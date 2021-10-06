@@ -72,20 +72,9 @@ class EmailStatus(models.Model):
         help_text='Has the email already been sent?',
     )
     """
-    Status for all customers is intially set to "U" 
-    If the email is sent,
-         it is changed to "S" 
-            return Set status 
-    
-    Everything resets to "U" the next day at 04:00 AM 
+    def SendEmail(self):
+        
 
-    def isSent(status): 
-
-        email_status  = x
-        is_sent = 
-
-        if email_status isSent: 
-            s
         
     """
     class Meta: 

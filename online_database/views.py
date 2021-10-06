@@ -3,6 +3,7 @@ import json
 import django_tables2
 from dal import autocomplete
 from django.conf import settings
+from django.core.mail import send_mail
 from django.core import mail
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
@@ -118,6 +119,8 @@ def send_daily_email(request):
 
     form = SelectEmailTemplateForm()
 
+    #A select email drop down list to select templates to choose from, 
+    #clients are able to choose from a list of templates 
     if request.method ==  "POST":
         form =  SelectEmailTemplateForm(request.POST)
         if form.is_valid():
@@ -125,6 +128,12 @@ def send_daily_email(request):
     errors = form.errors 
     return render(request, 'send_emails/send_daily_email.html', {'form':form, 'errors': errors})
 
+    """
+    - Render multiple forms on one page
+        - Create empty form to populate
+    - Selected template autopopulates field
+    - Button to send email template to all customers. 
+    """
 
 def send_email(request):
     
@@ -139,35 +148,6 @@ def send_email(request):
             return HttpResponseRedirect('send_emails/send_email.html')
     errors = form.errors 
     return render(request, 'send_emails/send_email.html', {'form':form, 'errors': errors})
-
-    
-    """
-        #Declare arguments for the send email form: 
-    form = SendEmailForm 
-    emails = Customer.objects.filter(id=showid).values('email_address')
-    date = timezone.now()
-    subject = EmailTemplate.objects.filter(id=showid).values('email_address')
-    message = EmailTemplate.objects.filter(id=showid).values('email_address')
-
-    def isSent(emails):
-        subject = subject
-        message = message
-        recepient = emails 
-
-        send_mail(subject, 
-        message, EMAIL_HOST_USER, 
-        [recepient], 
-        fail_silently = False)
-    
-    
-    if isSent: 
-        return render(request, 'send_emails/send_email.html') 
-    
-    else: 
-        isSent(emails)
-        return render(request, 'send_emails/send_email.html',{'select_email_template':select_email_template,'form': SendEmailForm }) 
-    """
-    
 
 #Help 
 def help(request):
