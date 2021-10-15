@@ -10,7 +10,7 @@ View - Customer Database/Manage Customers
       'manage_customers/manage_current_customers.html'.
     (DONE)- URL is manage_customers/manage_current_customers,
      name "manage_current_customers"
-    - Search bar for user to pull up and edit customer data.
+    -(DONE)Search bar for user to pull up and edit customer data.
     - EditCustomerForm is populated with customer data. 
     - Button at bottom left to delete customer. Button at bottom right to submit changes 
     - POST to database to amend changes. 
