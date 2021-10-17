@@ -11,7 +11,7 @@ View - Customer Database/Manage Customers
     (DONE)- URL is manage_customers/manage_current_customers,
      name "manage_current_customers"
     -(DONE)Search bar for user to pull up and edit customer data.
-    - EditCustomerForm is populated with customer data. 
+    - Enable EditCustomerForm is populate with customer data. 
     - Button at bottom left to delete customer. Button at bottom right to submit changes 
     - POST to database to amend changes. 
     - Javascript ALERT confirming submission. 
@@ -33,10 +33,6 @@ Authentication
 ----------------------------------------------
 - A session for each user that only restcits them to their own database. 
 
-(01.10.21)
-View - 
-----------------------------------------------
-- A session for each user that only restcits them to their own database. 
 
 
 
