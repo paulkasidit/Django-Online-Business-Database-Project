@@ -12,10 +12,12 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views import generic
 from django.views.generic import ListView
+from rest_framework import viewsets
 
 from .forms import CreateClientForm, CreateCustomerForm, CreateEmailTemplateForm, ManageCurrentCustomerForm, SendEmailForm, SelectEmailTemplateForm
 from .models import Client, Customer, EmailStatus, EmailTemplate
 from .tables import CustomerTable
+from .serializers import CustomerQuerySerializer
 
 #Home Page
 def home_page(request):
@@ -64,6 +66,12 @@ def manage_current_customers(request):
 
     else: 
         return render(request, 'manage_customers/manage_current_customers.html')
+
+
+#Customer REST API JSON View 
+class CustomerQueryView(viewsets.ModelViewSet):
+    serializer_class = CustomerQuerySerializer
+    queryset = Customer.objects.all()
 
 def manage_current_customers_form(request):
 
