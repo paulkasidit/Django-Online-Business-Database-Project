@@ -11,7 +11,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views import generic
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView, FormView
 from rest_framework import viewsets
 
 from .forms import CreateClientForm, CreateCustomerForm, CreateEmailTemplateForm, ManageCurrentCustomerForm, SendEmailForm, SelectEmailTemplateForm
@@ -67,11 +67,34 @@ def manage_current_customers(request):
     else: 
         return render(request, 'manage_customers/manage_current_customers.html')
 
+class ManageCurrentCustomerView(TemplateView): 
+    template_name  = 'manage_customers/manage_current_customers.html' 
 
-#Customer REST API JSON View 
-class CustomerQueryView(viewsets.ModelViewSet):
-    serializer_class = CustomerQuerySerializer
-    queryset = Customer.objects.all()
+    def get(self, request, *args, **kwargs):
+        edit_customer_form = ManageCurrentCustomerForm
+        context = self.get_context_data(**kwargs)
+        context['edit_customer_form'] = edit_customer_form
+        return self.render_to_response(context)
+
+class ManageCurrentCustomerFormView(FormView): 
+    form_class = ManageCurrentCustomerForm
+    template_name  = 'manage_customers/manage_current_customers.html' 
+    success_url = '/' 
+
+    def post(self, request, *args, **kwargs):
+        edit_customer_form = self.form_class(request.POST)
+        if edit_customer_form.is_valid():
+            edit_customer_form.save()
+            return self.render_to_response(
+                self.get_context_data(
+                success=True
+            )
+        )
+        else:
+            return self.render_to_response(
+            self.get_context_data(
+                edit_customer_form=edit_customer_form,
+        )
 
 def manage_current_customers_form(request):
 
@@ -85,7 +108,6 @@ def manage_current_customers_form(request):
     else:
         formset = formset
     return render(request, 'manage_customers/manage_current_customers.html', {'formset':formset})
-
 
 #Manage Customers/Create Customers 
 def create_customers(request):
@@ -138,7 +160,7 @@ def send_daily_email(request):
 
     """
     - Render multiple forms on one page
-        - Create empty form to populate
+    ç- Create empty form to populate
     - Selected template autopopulates field
     - Button to send email template to all customers. 
     """

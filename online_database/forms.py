@@ -10,7 +10,7 @@ from dal import autocomplete
 from .models import Client, Customer, EmailStatus, EmailTemplate
 
 
-class CreateClientForm(ModelForm):
+class CreateClientForm(ModelForm): #This form is used for sign up for new clients. 
     class Meta: 
         model = Client 
         fields = ('business_name',
@@ -22,12 +22,12 @@ class CreateClientForm(ModelForm):
                   'phone_number',
                     )
                 
-class CreateCustomerForm(ModelForm):
+class CreateCustomerForm(ModelForm): #This form is used to create new custoemrs by clients. 
     class Meta: 
         model = Customer 
         fields = '__all__'
 
-class ManageCurrentCustomerForm(ModelForm):
+class ManageCurrentCustomerForm(ModelForm): #Form is used to edit current customers. 
     class Meta: 
         model = Customer 
         fields = '__all__'

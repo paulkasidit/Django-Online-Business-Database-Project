@@ -9,7 +9,7 @@ This website serves as an online database (hosted via SQLLite) for fictional bus
 Brief Tutorial of Website Functions
 -------------------------
 
-Adding Customerss
+Adding Customers
 ------------------ 
 
 1. Go to "Manage Customers & Email" and select "Create New Customer", a form to add the customer data with required fields will be generated.  
