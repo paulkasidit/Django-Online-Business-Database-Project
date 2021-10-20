@@ -54,7 +54,16 @@ def manage_customers(request):
 
 
 #Manage Customers/Manage Current Customers
-def manage_current_customers(request):
+class ManageCurrentCustomerView(TemplateView): 
+    template_name  = 'manage_customers/manage_current_customers.html' 
+
+    def get(self, request, *args, **kwargs):
+        edit_customer_form = ManageCurrentCustomerForm
+        context = self.get_context_data(**kwargs)
+        context['edit_customer_form'] = edit_customer_form
+        return self.render_to_response(context)
+
+def manage_current_customers(request): #Search Bar to search for customers to manage 
 
     if request.method == "POST":
         searched = request.POST['searched']
