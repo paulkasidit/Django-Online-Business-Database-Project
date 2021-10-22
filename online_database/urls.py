@@ -24,6 +24,7 @@ urlpatterns = [
     path('send_emails/send_email', views.send_email, name='send_email'),
     path('send_emails/send_daily_email', views.send_daily_email, name='send_daily_email'),
     #help 
-    path('help/', views.help, name='help')
+    path('help/', views.help, name='help'),
+    path('help/customer_support', views.customer_support, name='customer_support'),
 ]
  

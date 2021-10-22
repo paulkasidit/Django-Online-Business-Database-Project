@@ -1,13 +1,13 @@
 import datetime
 
+from dal import autocomplete
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 
-from dal import autocomplete
-
-from .models import Client, Customer, EmailStatus, EmailTemplate
+from .models import (Client, Customer, CustomerRequests, EmailStatus,
+                     EmailTemplate)
 
 
 class CreateClientForm(ModelForm): #This form is used for sign up for new clients. 
@@ -52,3 +52,10 @@ class SendEmailForm(ModelForm):
                   'city',
                   'state',
                   'email_address',)
+
+#Form for clients to be able to submit support requests
+class CustomerRequestsForm(ModelForm):
+    message = forms.CharField( widget=forms.Textarea )
+    class Meta: 
+        model = CustomerRequests 
+        fields = '__all__' 

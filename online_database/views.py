@@ -15,8 +15,8 @@ from rest_framework import viewsets
 
 from .forms import (CreateClientForm, CreateCustomerForm,
                     CreateEmailTemplateForm, ManageCurrentCustomerForm,
-                    SelectEmailTemplateForm, SendEmailForm)
-from .models import Client, Customer, EmailStatus, EmailTemplate
+                    SelectEmailTemplateForm, SendEmailForm, CustomerRequestsForm)
+from .models import Client, Customer, EmailStatus, EmailTemplate, CustomerRequests
 from .serializers import CustomerQuerySerializer
 from .tables import CustomerTable
 
@@ -142,7 +142,21 @@ def send_email(request):
             return HttpResponseRedirect('send_emails/send_email.html')
     errors = form.errors 
     return render(request, 'send_emails/send_email.html', {'form':form, 'errors': errors})
-    
+
 #Help 
 def help(request):
     return render(request, 'help.html')
+
+#Help/Customer Support - form for customers to fill in their support requests
+def customer_support(request):
+
+    formset = CustomerRequestsForm
+
+    if request.method == 'POST':
+        formset = CustomerRequestsForm(request.POST)
+        if formset.is_valid():
+            formset.save()
+    else:
+        formset = formset
+    
+        return render(request, 'help/customer_support.html', {'formset':formset}) 

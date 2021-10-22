@@ -82,3 +82,13 @@ class EmailStatus(models.Model):
     
     def __str__(self):
         return f'{self.status} - {self.email}'
+
+class CustomerRequests(models.Model): 
+
+    business_name = models.CharField("Business Name", max_length = 30)
+    date = models.DateField("Date", default = timezone.now)
+    message = models.CharField("Request Message", max_length = 150) 
+    email = models.EmailField("Email Address", max_length=50, help_text='Enter a valid email address')
+
+    def __str__(self): 
+        return f'{self.business_name} - {self.date} - {self.message}'

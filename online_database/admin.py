@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Client, Customer, EmailStatus, EmailTemplate
-from .forms import CreateEmailTemplateForm
+from .models import Client, Customer, EmailStatus, EmailTemplate, CustomerRequests
+from .forms import CreateEmailTemplateForm, CustomerRequestsForm
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
@@ -30,3 +30,6 @@ class EmailStatusAdmin(admin.ModelAdmin):
         }),
     )
 
+@admin.register(CustomerRequests)
+class CustomerRequestsAdmin(admin.ModelAdmin): 
+    form = CustomerRequestsForm
