@@ -3,21 +3,23 @@ import json
 import django_tables2
 from dal import autocomplete
 from django.conf import settings
-from django.core.mail import send_mail
 from django.core import mail
+from django.core.mail import send_mail
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
-from django.http import JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views import generic
-from django.views.generic import ListView, TemplateView, FormView
+from django.views.generic import FormView, ListView, TemplateView
 from rest_framework import viewsets
 
-from .forms import CreateClientForm, CreateCustomerForm, CreateEmailTemplateForm, ManageCurrentCustomerForm, SendEmailForm, SelectEmailTemplateForm
+from .forms import (CreateClientForm, CreateCustomerForm,
+                    CreateEmailTemplateForm, ManageCurrentCustomerForm,
+                    SelectEmailTemplateForm, SendEmailForm)
 from .models import Client, Customer, EmailStatus, EmailTemplate
-from .tables import CustomerTable
 from .serializers import CustomerQuerySerializer
+from .tables import CustomerTable
+
 
 #Home Page
 def home_page(request):
@@ -52,71 +54,24 @@ def customer_database_view(request):
 def manage_customers(request):
     return render(request, 'manage_customers.html')
 
-
 #Manage Customers/Manage Current Customers
-class ManageCurrentCustomerView(TemplateView): 
-    template_name  = 'manage_customers/manage_current_customers.html' 
-
-    def get(self, request, *args, **kwargs):
-        edit_customer_form = ManageCurrentCustomerForm
-        context = self.get_context_data(**kwargs)
-        context['edit_customer_form'] = edit_customer_form
-        return self.render_to_response(context)
-
 def manage_current_customers(request): #Search Bar to search for customers to manage 
+    edit_customer_form = ManageCurrentCustomerForm
 
-    if request.method == "POST":
+    if request.method == 'POST': 
+
         searched = request.POST['searched']
-
         customers = Customer.objects.filter(first_name__icontains=searched)
 
         return render(request, 'manage_customers/manage_current_customers.html',
-         {'searched':searched ,'customers':customers})
-
+        
+                {'searched':searched ,'customers':customers, 'edit_customer_form': edit_customer_form})
     else: 
         return render(request, 'manage_customers/manage_current_customers.html')
 
-class ManageCurrentCustomerView(TemplateView): 
-    template_name  = 'manage_customers/manage_current_customers.html' 
-
-    def get(self, request, *args, **kwargs):
-        edit_customer_form = ManageCurrentCustomerForm
-        context = self.get_context_data(**kwargs)
-        context['edit_customer_form'] = edit_customer_form
-        return self.render_to_response(context)
-
-class ManageCurrentCustomerFormView(FormView): 
-    form_class = ManageCurrentCustomerForm
-    template_name  = 'manage_customers/manage_current_customers.html' 
-    success_url = '/' 
-
-    def post(self, request, *args, **kwargs):
-        edit_customer_form = self.form_class(request.POST)
-        if edit_customer_form.is_valid():
-            edit_customer_form.save()
-            return self.render_to_response(
-                self.get_context_data(
-                success=True
-            )
-        )
-        else:
-            return self.render_to_response(
-            self.get_context_data(
-                edit_customer_form=edit_customer_form,
-        )
-
-def manage_current_customers_form(request):
-
-    formset = ManageCurrentCustomerForm
-
-    if request.method == 'POST':
-        formset = ManageCurrentCustomerForm(request.POST)
-        if formset.is_valid():
-            formset.save()
-            return HttpResponseRedirect('/online_database/customer_database/')
-    else:
-        formset = formset
-    return render(request, 'manage_customers/manage_current_customers.html', {'formset':formset})
+    #Edit Customer forms are prompted after a query for a customer is made
+    if edit_customer_form.is_valid(): 
+        return render(request, 'manage_customers/manage_current_customers.html')
 
 #Manage Customers/Create Customers 
 def create_customers(request):
@@ -187,7 +142,7 @@ def send_email(request):
             return HttpResponseRedirect('send_emails/send_email.html')
     errors = form.errors 
     return render(request, 'send_emails/send_email.html', {'form':form, 'errors': errors})
-
+    
 #Help 
 def help(request):
     return render(request, 'help.html')

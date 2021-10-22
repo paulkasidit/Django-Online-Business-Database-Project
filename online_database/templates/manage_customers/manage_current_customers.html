@@ -1,5 +1,6 @@
 {% extends "base_generic.html" %}
 
+<!--Seach Bar to search for customers to manage-->
 {% block content %}
 <form class = "d-flex" method = "POST" action = "{% url 'online_database:manage_current_customers' %}">
     {% csrf_token %}
@@ -21,15 +22,17 @@
 {% else %}
     <h1> Search For Customers To Manage </h1>
 {% endif %}   
+<!--End-->
 
+<!--Fields to edit customers in Database-->
 <h2>Update Current Customer</h2>
-<form method="post" action="">
-    {% csrf_token %}<!-- required since Django 1.2 or later -->
-    <ul>
-        {{ formset.as_ul }}
-    </ul>
-    <input type="submit" value="Update Customer"/>
+<form method="post">
+    {% csrf_token %}
+    {{  edit_customer_form.as_p }}
+    <input type="submit" value="Save">
 </form>
+<!--End-->
+
 
 {% endblock %}
 

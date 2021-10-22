@@ -17,7 +17,7 @@ urlpatterns = [
     #manage customers
     path('manage_customers/', views.manage_customers, name='manage_customers'),
     path('manage_customers/create_customers', views.create_customers, name='create_customers'),
-    path('manage_customers/manage_current_customers', TemplateView.as_view(template_name="manage_current_customers.html"), name='manage_current_customers'),
+    path('manage_customers/manage_current_customers', views.manage_current_customers, name="manage_current_customers"),
     path('manage_customers/manage_email_templates', views.manage_email_templates, name='manage_email_templates'),
     #send emails 
     path('send_emails/', views.send_emails, name='send_emails'),

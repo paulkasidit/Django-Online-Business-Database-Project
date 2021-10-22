@@ -21,13 +21,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers
 
-router = routers.DefaultRouter()
-router.register(r'online_database', views.CustomerQueryView, 'CustomerQueryView')
-
 urlpatterns = [
     #path('ajax_select/', include(ajax_select_urls)),
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
     path('online_database/',include('online_database.urls')),
     path('', RedirectView.as_view(url='/online_database/', permanent=True)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -5,4 +5,7 @@
     {% csrf_token %}
     {{ form.as_p }}
 </form>
+<form action='actionUrl' method='GET'>
+    <button type='submit'>Send Daily Email Using This Template</button>
+</form>
 {% endblock %}
