@@ -26,5 +26,6 @@ urlpatterns = [
     #help 
     path('help/', views.help, name='help'),
     path('help/customer_support', views.customer_support, name='customer_support'),
+    path('help/update_business_details', views.update_business_details, name='update_business_details'),
 ]
  

@@ -14,9 +14,11 @@ from django.views.generic import FormView, ListView, TemplateView
 from rest_framework import viewsets
 
 from .forms import (CreateClientForm, CreateCustomerForm,
-                    CreateEmailTemplateForm, ManageCurrentCustomerForm,
-                    SelectEmailTemplateForm, SendEmailForm, CustomerRequestsForm)
-from .models import Client, Customer, EmailStatus, EmailTemplate, CustomerRequests
+                    CreateEmailTemplateForm, CustomerRequestsForm,
+                    ManageCurrentCustomerForm, SelectEmailTemplateForm,
+                    SendEmailForm, UpdateBusinessDetailsForm)
+from .models import (Client, Customer, CustomerRequests, EmailStatus,
+                     EmailTemplate)
 from .serializers import CustomerQuerySerializer
 from .tables import CustomerTable
 
@@ -159,4 +161,17 @@ def customer_support(request):
     else:
         formset = formset
     
-        return render(request, 'help/customer_support.html', {'formset':formset}) 
+    return render(request, 'help/customer_support.html', {'formset':formset}) 
+
+def update_business_details(request): 
+
+    formset = UpdateBusinessDetailsForm
+
+    if request.method == 'POST':
+        formset = UpdateBusinessDetailsForm(request.POST)
+        if formset.is_valid():
+            formset.save()
+    else:
+        formset = formset
+
+    return render(request, 'help/update_business_details.html', {'formset':formset})

@@ -53,9 +53,19 @@ class SendEmailForm(ModelForm):
                   'state',
                   'email_address',)
 
+#Help/Change Business Details
+#Form for business to update their details 
+
+class UpdateBusinessDetailsForm(ModelForm):
+    class Meta: 
+        model = Client
+        exclude = ('email_address','email_confirmed','uniqueID',)
+
+#Help/Support
 #Form for clients to be able to submit support requests
 class CustomerRequestsForm(ModelForm):
     message = forms.CharField( widget=forms.Textarea )
     class Meta: 
-        model = CustomerRequests 
-        fields = '__all__' 
+        model = CustomerRequests
+        fields = '__all__'
+    

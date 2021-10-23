@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>Update Business Details</h2>
+    <form method="post" action="">
+        {% csrf_token %}<!-- required since Django 1.2 or later -->
+    <ul>
+        {{ formset.as_ul }}
+    </ul>
+        <input type="submit" value="Update"/>
+    </form>
+{% endblock %}

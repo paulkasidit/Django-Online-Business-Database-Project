@@ -2,7 +2,7 @@
 
 {% block content %}
 <ul>
-    <li><a href="">Change Business Details</a></li>
+    <li><a href="{% url 'online_database:update_business_details' %}">Update Business Details</a></li>
     <li><a href="{% url 'online_database:customer_support' %}">Support</a></li>
 </ul>
 {% endblock %}
