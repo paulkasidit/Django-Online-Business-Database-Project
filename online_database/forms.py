@@ -14,7 +14,15 @@ from .models import (Client, Customer, CustomerRequests, EmailStatus,
 #Authentication/Create User(Client) 
 class NewUserForm(UserCreationForm):
     class Meta: 
-        pass
+        model = Client
+        fields = ('email',
+                  'business_name',
+                  'first_name',
+                  'last_name',
+                  'city',
+                  'state',
+                  'phone_number',
+                )
 
 class CreateClientForm(ModelForm): #This form is used for sign up for new clients. 
     class Meta: 
@@ -24,7 +32,7 @@ class CreateClientForm(ModelForm): #This form is used for sign up for new client
                   'last_name',
                   'city',
                   'state',
-                  'email_address',
+                  'email',
                   'phone_number',
                     )
                 
@@ -65,7 +73,7 @@ class SendEmailForm(ModelForm):
 class UpdateBusinessDetailsForm(ModelForm):
     class Meta: 
         model = Client
-        exclude = ('email_address','email_confirmed','uniqueID',)
+        exclude = ('email','email_confirmed','uniqueID',)
 
 #Help/Support
 #Form for clients to be able to submit support requests

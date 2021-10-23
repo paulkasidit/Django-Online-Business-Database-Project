@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views import generic
 from django.views.generic import FormView, ListView, TemplateView
+from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
 
 from .forms import (CreateClientForm, CreateCustomerForm,
@@ -22,7 +23,11 @@ from .models import (Client, Customer, CustomerRequests, EmailStatus,
 from .serializers import CustomerQuerySerializer
 from .tables import CustomerTable
 
-#Authentication/Create User(Client)  
+#Authentication/Create User(Client) 
+def login(request): 
+
+    return render(request, 'authentication/register.html') 
+
 def signup(request): 
 
     if request.POST == 'POST':
@@ -37,6 +42,7 @@ def signup(request):
     return render(request, 'authentication/register.html', {'form':form})
 
 #Home Page
+@login_required
 def home_page(request):
 
     """Home page database view"""
@@ -56,6 +62,7 @@ def home_page(request):
 
 
 #Customer Database
+@login_required
 def customer_database_view(request):
 
     table = CustomerTable(Customer.objects.all())
@@ -66,10 +73,12 @@ def customer_database_view(request):
 
 
 #Manage Customers
+@login_required
 def manage_customers(request):
     return render(request, 'manage_customers.html')
 
 #Manage Customers/Manage Current Customers
+@login_required
 def manage_current_customers(request): #Search Bar to search for customers to manage 
     edit_customer_form = ManageCurrentCustomerForm
 
@@ -88,6 +97,7 @@ def manage_current_customers(request): #Search Bar to search for customers to ma
         return render(request, 'manage_customers/manage_current_customers.html')
 
 #Manage Customers/Create Customers 
+@login_required
 def create_customers(request):
     
     #CreateClientForm for clients to input new user information.
@@ -103,6 +113,7 @@ def create_customers(request):
     return render(request, 'manage_customers/create_customers.html', {'formset':formset})
 
 #Manage Customers/Manage Email Tempalates
+@login_required
 def manage_email_templates(request):
 
     #CreatEmailTemplateForm for clients to edit email templates.
@@ -118,11 +129,12 @@ def manage_email_templates(request):
         formset = formset
     return render(request, 'manage_customers/manage_email_templates.html', {'formset':formset}) 
 
-
+@login_required
 def send_emails(request):
     #Directory that maps out to the different functions of this feature
     return render(request, 'send_emails.html')
 
+@login_required
 def send_daily_email(request):
 
     form = SelectEmailTemplateForm()
@@ -143,6 +155,7 @@ def send_daily_email(request):
     - Button to send email template to all customers. 
     """
 
+@login_required
 def send_email(request):
     
     #A select email drop down list to select templates to choose from, 
@@ -158,10 +171,12 @@ def send_email(request):
     return render(request, 'send_emails/send_email.html', {'form':form, 'errors': errors})
 
 #Help 
+@login_required
 def help(request):
     return render(request, 'help.html')
 
 #Help/Customer Support - form for customers to fill in their support requests
+@login_required
 def customer_support(request):
 
     formset = CustomerRequestsForm
@@ -175,6 +190,7 @@ def customer_support(request):
     
     return render(request, 'help/customer_support.html', {'formset':formset}) 
 
+@login_required
 def update_business_details(request): 
 
     formset = UpdateBusinessDetailsForm

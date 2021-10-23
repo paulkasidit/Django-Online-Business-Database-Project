@@ -11,9 +11,10 @@ app_name = 'online_database'
 
 urlpatterns = [
     #authentication 
-    path('customer_database/signup', views.signup, name="signup"),
+    path('', views.login, name='login'),
+    path('signup', views.signup, name="signup"),
     #homepage
-    path('', views.home_page, name='home_page'),
+    path('home', views.home_page, name='home_page'),
     #database view
     path('customer_database/', views.customer_database_view, name='customer_database'),
     #manage customers

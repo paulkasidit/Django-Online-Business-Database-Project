@@ -1,27 +1,49 @@
 import uuid
 
 from django.conf import settings
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core import mail
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.core.validators import validate_email
-from django.utils.text import slugify
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 from localflavor.us.us_states import STATE_CHOICES
 
+from .managers import CustomUserManager
 
-class Client(models.Model):
+class Client(AbstractBaseUser, PermissionsMixin):
+
+    email = models.EmailField("Email Address", max_length=50, unique = True)
+    
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateField(default = timezone.now)
+    
     business_name = models.CharField("Business Name",max_length = 30)
     first_name = models.CharField("First Name",max_length = 30)
     last_name =  models.CharField("Last Name",max_length = 30)
     city = models.CharField("City Name",max_length = 30)
     state = models.CharField("State", max_length=2, choices=STATE_CHOICES, null=True, blank=True)  
     phone_number = models.CharField("Phone Number",max_length=10)
-    email_address = models.EmailField("Email Address",max_length=50)
+    
     email_confirmed = models.BooleanField(default=False)
     uniqueID = models.UUIDField("Your Client ID", max_length=255, default = uuid.uuid1,primary_key=True)
+
+    USERNAME_FIELD = 'email'
+
+    REQUIRED_FIELDS = ['business_name',
+                        'first_name',
+                        'last_name',
+                        'city',
+                        'state',
+                        'phone_number',
+                        ]
+
+    objects = CustomUserManager()
 
     def __str__(self):
         return f'{self.business_name} - {self.city}, {self.state}'

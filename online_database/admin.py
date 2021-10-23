@@ -8,8 +8,8 @@ from .models import (Client, Customer, CustomerRequests, EmailStatus,
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('business_name','city','state','phone_number','email_address')
-    fields = ['business_name',('city','state'),('phone_number','email_address')]
+    list_display = ('business_name','city','state','phone_number','email')
+    fields = ['business_name',('city','state'),('phone_number','email')]
 
 
 @admin.register(Customer)
