@@ -10,6 +10,8 @@ from . import views
 app_name = 'online_database'
 
 urlpatterns = [
+    #authentication 
+    path('customer_database/signup', views.signup, name="signup"),
     #homepage
     path('', views.home_page, name='home_page'),
     #database view

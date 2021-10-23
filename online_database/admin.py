@@ -1,6 +1,10 @@
 from django.contrib import admin
-from .models import Client, Customer, EmailStatus, EmailTemplate, CustomerRequests
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
 from .forms import CreateEmailTemplateForm, CustomerRequestsForm
+from .models import (Client, Customer, CustomerRequests, EmailStatus,
+                     EmailTemplate)
+
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):

@@ -1,0 +1,10 @@
+{% block content %}
+<h2>Signup</h2>
+    <form method="post" action="">
+        {% csrf_token %}<!-- required since Django 1.2 or later -->
+    <ul>
+        {{ form.as_ul }}
+    </ul>
+        <input type="submit" value="Update"/>
+    </form>
+{% endblock %}

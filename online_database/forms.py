@@ -2,6 +2,8 @@ import datetime
 
 from dal import autocomplete
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
@@ -9,6 +11,10 @@ from django.utils.translation import ugettext_lazy as _
 from .models import (Client, Customer, CustomerRequests, EmailStatus,
                      EmailTemplate)
 
+#Authentication/Create User(Client) 
+class NewUserForm(UserCreationForm):
+    class Meta: 
+        pass
 
 class CreateClientForm(ModelForm): #This form is used for sign up for new clients. 
     class Meta: 

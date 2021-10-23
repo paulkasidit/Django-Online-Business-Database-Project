@@ -16,12 +16,25 @@ from rest_framework import viewsets
 from .forms import (CreateClientForm, CreateCustomerForm,
                     CreateEmailTemplateForm, CustomerRequestsForm,
                     ManageCurrentCustomerForm, SelectEmailTemplateForm,
-                    SendEmailForm, UpdateBusinessDetailsForm)
+                    SendEmailForm, UpdateBusinessDetailsForm, NewUserForm)
 from .models import (Client, Customer, CustomerRequests, EmailStatus,
                      EmailTemplate)
 from .serializers import CustomerQuerySerializer
 from .tables import CustomerTable
 
+#Authentication/Create User(Client)  
+def signup(request): 
+
+    if request.POST == 'POST':
+        form = NewUserForm() 
+        if form.is_valid(): 
+            form.save() 
+        messages.success(request, 'Account created succesfully')
+
+    else: 
+        form = NewUserForm 
+
+    return render(request, 'authentication/register.html', {'form':form})
 
 #Home Page
 def home_page(request):
@@ -65,8 +78,7 @@ def manage_current_customers(request): #Search Bar to search for customers to ma
         searched = request.POST['searched']
         customers = Customer.objects.filter(first_name__icontains=searched)
 
-        return render(request, 'manage_customers/manage_current_customers.html',
-        
+        return render(request, 'manage_customers/manage_current_customers.html', 
                 {'searched':searched ,'customers':customers, 'edit_customer_form': edit_customer_form})
     else: 
         return render(request, 'manage_customers/manage_current_customers.html')
