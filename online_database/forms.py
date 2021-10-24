@@ -7,12 +7,13 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.forms import AuthenticationForm
 
 from .models import (Client, Customer, CustomerRequests, EmailStatus,
                      EmailTemplate)
 
 #Authentication/Create User(Client) 
-class NewUserForm(UserCreationForm):
+class CreateUserForm(UserCreationForm):
     class Meta: 
         model = Client
         fields = ('email',
@@ -24,18 +25,12 @@ class NewUserForm(UserCreationForm):
                   'phone_number',
                 )
 
-class CreateClientForm(ModelForm): #This form is used for sign up for new clients. 
+#Authenticaiton/Client Login(Client)
+class LoginForm(AuthenticationForm):
     class Meta: 
         model = Client 
-        fields = ('business_name',
-                  'first_name',
-                  'last_name',
-                  'city',
-                  'state',
-                  'email',
-                  'phone_number',
-                    )
-                
+        fields = ['username', 'email', 'password1', 'password2']
+
 class CreateCustomerForm(ModelForm): #This form is used to create new custoemrs by clients. 
     class Meta: 
         model = Customer 

@@ -3,6 +3,7 @@ import json
 import django_tables2
 from dal import autocomplete
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core import mail
 from django.core.mail import send_mail
 from django.db.models import Q
@@ -11,33 +12,52 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views import generic
 from django.views.generic import FormView, ListView, TemplateView
-from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate
 
-from .forms import (CreateClientForm, CreateCustomerForm,
-                    CreateEmailTemplateForm, CustomerRequestsForm,
+from .forms import (CreateCustomerForm, CreateEmailTemplateForm,
+                    CreateUserForm, CustomerRequestsForm,
                     ManageCurrentCustomerForm, SelectEmailTemplateForm,
-                    SendEmailForm, UpdateBusinessDetailsForm, NewUserForm)
+                    SendEmailForm, UpdateBusinessDetailsForm, LoginForm)
 from .models import (Client, Customer, CustomerRequests, EmailStatus,
                      EmailTemplate)
 from .serializers import CustomerQuerySerializer
 from .tables import CustomerTable
 
+
 #Authentication/Create User(Client) 
 def login(request): 
 
-    return render(request, 'authentication/register.html') 
+    form = LoginForm
+    message = '' 
+
+    if request.method == 'POST': 
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(
+                username = form.cleaned_data['username'],
+                password = form.cleaned_data['password'],
+            )
+            if user is not None: 
+                login(request, user)
+                return HttpResponseRedirect('online_database/home')
+            else: 
+                message = 'Login failed!' 
+    return render (request, 'authentication/login.html', context = {'form': form, 'message': message})
 
 def signup(request): 
 
+    form = CreateUserForm
+
     if request.POST == 'POST':
-        form = NewUserForm() 
+        form = CreateUserForm() 
         if form.is_valid(): 
             form.save() 
         messages.success(request, 'Account created succesfully')
 
     else: 
-        form = NewUserForm 
+        form = CreateUserForm 
 
     return render(request, 'authentication/register.html', {'form':form})
 

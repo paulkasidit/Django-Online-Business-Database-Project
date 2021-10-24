@@ -148,4 +148,4 @@ CORS_ORIGIN_WHITELIST = [
 AUTH_USER_MODEL = 'online_database.Client'
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'online_database/home'
+LOGIN_REDIRECT_URL = '/'

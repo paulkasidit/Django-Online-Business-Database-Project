@@ -13,6 +13,7 @@ urlpatterns = [
     #authentication 
     path('', views.login, name='login'),
     path('signup', views.signup, name="signup"),
+    path('login', views.login, name="login"),
     #homepage
     path('home', views.home_page, name='home_page'),
     #database view

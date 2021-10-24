@@ -48,9 +48,10 @@ class Client(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f'{self.business_name} - {self.city}, {self.state}'
         
-
+"""
     def get_absolute_url(self):
         return reverse('client_details', args=[str(self.id)])
+"""
 
 class Customer(models.Model): 
 
