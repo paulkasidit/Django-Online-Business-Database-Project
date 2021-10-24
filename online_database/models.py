@@ -11,9 +11,11 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.edit import CreateView, UpdateView
 from localflavor.us.us_states import STATE_CHOICES
 
 from .managers import CustomUserManager
+
 
 class Client(AbstractBaseUser, PermissionsMixin):
 
@@ -33,6 +35,8 @@ class Client(AbstractBaseUser, PermissionsMixin):
     email_confirmed = models.BooleanField(default=False)
     uniqueID = models.UUIDField("Your Client ID", max_length=255, default = uuid.uuid1,primary_key=True)
 
+    objects = CustomUserManager()
+
     USERNAME_FIELD = 'email'
 
     REQUIRED_FIELDS = ['business_name',
@@ -43,7 +47,6 @@ class Client(AbstractBaseUser, PermissionsMixin):
                         'phone_number',
                         ]
 
-    objects = CustomUserManager()
 
     def __str__(self):
         return f'{self.business_name} - {self.city}, {self.state}'

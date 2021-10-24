@@ -48,19 +48,21 @@ def login(request):
 
 def signup(request): 
 
-    form = CreateUserForm
+    form =  CreateUserForm
 
-    if request.POST == 'POST':
-        form = CreateUserForm() 
+    if request.method == 'POST': 
+        form = CreateUserForm(request.POST)
         if form.is_valid(): 
             form.save() 
-        messages.success(request, 'Account created succesfully')
-
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username = username, password = raw_password)
+            login(request,user)
+            return redirect('online_database:home')
     else: 
-        form = CreateUserForm 
-
-    return render(request, 'authentication/register.html', {'form':form})
-
+        form = CreateUserForm() 
+    return render(request, 'authentication/register.html',{'form':form})
+ 
 #Home Page
 @login_required
 def home_page(request):
