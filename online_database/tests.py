@@ -5,8 +5,9 @@ from django.test import TestCase
 from django.utils import timezone
 
 from online_database.models import Customer
+from online_database.forms import LoginForm
 
-#Authentication/Customer User Model - 
+#Authentication/Customer User Model  
 class UsersManagersTests(TestCase):
 
     def test_create_user(self):
@@ -46,6 +47,27 @@ class UsersManagersTests(TestCase):
             User.objects.create_superuser(
                 email='super@user.com', password='foo', is_superuser=False)
 
+#Authentication/Login 
+class LoginTests(TestCase):   
+    
+    def login(request):  
+        form = LoginForm
+        message = '' 
+
+        if request.method == 'POST': 
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                user = authenticate(
+                    username = form.cleaned_data['username'],
+                    password = form.cleaned_data['password'],
+                )
+                if user is not None: 
+                    login(request, user)
+                    return HttpResponseRedirect('home_page')
+                else: 
+                    message = 'Login failed!' 
+        return render (request, 'authentication/login.html', context = {'form': form, 'message': message})
+        
 #Send Emails/ Send Email Function 
 class EmailTestCase(TestCase): 
     def SendEmail(self): #Plain Send Email Function 

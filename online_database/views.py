@@ -41,7 +41,7 @@ def login(request):
             )
             if user is not None: 
                 login(request, user)
-                return HttpResponseRedirect('online_database/home')
+                return HttpResponseRedirect('home_page')
             else: 
                 message = 'Login failed!' 
     return render (request, 'authentication/login.html', context = {'form': form, 'message': message})
@@ -57,8 +57,8 @@ def signup(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username = username, password = raw_password)
-            login(request,user)
-            return redirect('online_database:home')
+            login(request, user)
+            return redirect('home_page')
     else: 
         form = CreateUserForm() 
     return render(request, 'authentication/register.html',{'form':form})
@@ -159,6 +159,8 @@ def send_emails(request):
 @login_required
 def send_daily_email(request):
 
+    num_email_status = EmailStatus.objects.count()
+
     form = SelectEmailTemplateForm()
 
     #A select email drop down list to select templates to choose from, 
@@ -168,7 +170,7 @@ def send_daily_email(request):
         if form.is_valid():
             return HttpResponseRedirect('send_emails/send_daily_email')
     errors = form.errors 
-    return render(request, 'send_emails/send_daily_email.html', {'form':form, 'errors': errors})
+    return render(request, 'send_emails/send_daily_email.html', {'form':form, 'errors': errors, 'num_email_status': num_email_status})
 
     """
     - Render multiple forms on one page
@@ -183,6 +185,8 @@ def send_email(request):
     #A select email drop down list to select templates to choose from, 
     #clients are able to choose from a list of templates 
 
+    num_email_status = EmailStatus.objects.count()
+    
     form = SelectEmailTemplateForm()
 
     if request.method ==  "POST":
@@ -190,7 +194,8 @@ def send_email(request):
         if form.is_valid():
             return HttpResponseRedirect('send_emails/send_email.html')
     errors = form.errors 
-    return render(request, 'send_emails/send_email.html', {'form':form, 'errors': errors})
+
+    return render(request, 'send_emails/send_email.html', {'form':form, 'errors': errors, 'num_email_status': num_email_status})
 
 #Help 
 @login_required

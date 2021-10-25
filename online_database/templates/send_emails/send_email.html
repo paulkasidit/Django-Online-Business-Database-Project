@@ -1,11 +1,12 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+<h2> {{num_email_status}} emails left to be sent today</h2>
 <form action = "{% url 'online_database:send_email' %}" method = "post"> 
     {% csrf_token %}
     {{ form.as_p }}
 </form>
 <form action='actionUrl' method='GET'>
-    <button type='submit'>Send Daily Email Using This Template</button>
+    <button type='submit'>Send Email Using This Template</button>
 </form>
 {% endblock %}

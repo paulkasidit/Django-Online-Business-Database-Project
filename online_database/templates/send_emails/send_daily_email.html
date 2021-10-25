@@ -1,6 +1,7 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+<h2> {{num_email_status}} emails left to be sent today</h2>
 <form action = "{% url 'online_database:send_email' %}" method = "post"> 
     {% csrf_token %}
     {{ form.as_p }}
