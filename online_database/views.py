@@ -8,7 +8,7 @@ from django.core import mail
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views import generic
 from django.views.generic import FormView, ListView, TemplateView
@@ -27,28 +27,27 @@ from .tables import CustomerTable
 
 
 #Authentication/Create User(Client) 
-def login(request): 
+def client_login(request): 
 
-    form = LoginForm
-    message = '' 
+    form = LoginForm()
 
     if request.method == 'POST': 
-        form = LoginForm(request.POST)
+        form = LoginForm(request, data=request.POST)
         if form.is_valid():
-            user = authenticate(
-                username = form.cleaned_data['username'],
-                password = form.cleaned_data['password'],
-            )
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+
             if user is not None: 
-                login(request, user)
-                return HttpResponseRedirect('home_page')
+                login(request,user)
+                return redirect('/online_database/home')
             else: 
-                message = 'Login failed!' 
-    return render (request, 'authentication/login.html', context = {'form': form, 'message': message})
+                return redirect('')
+    return render(request, 'authentication/login.html', {'form':form})
 
-def signup(request): 
+def client_signup(request): 
 
-    form =  CreateUserForm
+    form =  CreateUserForm()
 
     if request.method == 'POST': 
         form = CreateUserForm(request.POST)
@@ -58,11 +57,15 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username = username, password = raw_password)
             login(request, user)
-            return redirect('home_page')
+            return redirect('/online_database/home')
     else: 
         form = CreateUserForm() 
     return render(request, 'authentication/register.html',{'form':form})
- 
+
+def client_logout(request):
+    logout(request)
+    return redirect('')
+    
 #Home Page
 @login_required
 def home_page(request):
